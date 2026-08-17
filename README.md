@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="./frontend/public/logo.png" alt="EventHub Logo" width="120" />
-</p>
-
-# EventHub
+# <img src="./frontend/public/logo.png" alt="EventHub Logo" width="40" style="vertical-align: middle; margin-right: 10px;" /> EventHub
 
 **A Premium, High-Fidelity Event Management and Ticketing Engine.**
 
