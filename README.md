@@ -1,107 +1,200 @@
-# 🎪 EventHub
+<p align="center">
+  <img src="./frontend/public/logo.png" alt="EventHub Logo" width="120" />
+</p>
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=flat&logo=node.js&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/postgresql-%23316192.svg?style=flat&logo=postgresql&logoColor=white)
+# EventHub
 
-EventHub is a modern, premium event management platform inspired by the minimalist, high-fidelity aesthetic of platforms like Luma. It provides a seamless, edge-to-edge experience for discovering, registering for, and managing events.
+**A Premium, High-Fidelity Event Management and Ticketing Engine.**
 
-## ✨ Key Features
+EventHub is a modern event management platform inspired by the minimalist, high-fidelity aesthetic of platforms like Luma. It provides a seamless, edge-to-edge experience for discovering, registering for, and managing events, featuring robust role-based access control and automated email ticketing.
 
-- **Premium UI/UX:** A stunning, fully custom dark-mode interface built without heavy CSS frameworks. Features include edge-to-edge gradient hero sections, floating visual cards, and a sleek transparent navigation system.
-- **Robust Authentication:** Secure JWT-based authentication system with Role-Based Access Control (RBAC). Differentiates standard users from administrators.
-- **Admin Dashboard:** A centralized control panel for event creators to manage events, track registrations, and monitor available seats in real-time.
-- **Automated Email Notifications:** Integrates with Nodemailer to dispatch beautiful HTML registration confirmation emails directly to users' inboxes upon successful ticket booking.
-- **Responsive Architecture:** Fully responsive layout with custom mobile hamburger menus, ensuring the platform looks incredible on desktops, tablets, and mobile devices.
+---
 
-## 🛠️ Technology Stack
+## About The Project
+Traditional event management systems are often bloated and visually unappealing. EventHub solves this by focusing on a premium user experience and lightweight, high-performance architecture:
+
+- **Edge-to-Edge Aesthetic**: Escapes standard global CSS wrappers to deliver immersive, full-width landing pages with floating visual elements.
+- **Role-Based Access Control**: Secure JWT authentication ensuring standard users can only view and book events, while administrators have full CRUD capabilities.
+- **Automated Ticketing**: Integrates with Nodemailer to instantly dispatch HTML ticket confirmations upon successful registration.
+- **Raw SQL Performance**: Bypasses heavy ORMs in favor of highly optimized, raw PostgreSQL queries for maximum database efficiency.
+
+---
+
+## Key Features
+- **Custom UI Architecture**: Built completely without CSS frameworks to allow for hyper-specific styling, transparent navigation, and floating micro-animations.
+- **Real-Time Registration Tracking**: Administrators can monitor available seats, total registrations, and live capacity in real-time.
+- **JWT Stateless Authentication**: Secure, horizontal-scalable authentication utilizing HTTP-bearer tokens stored in memory.
+- **Bcrypt Password Hashing**: Industry-standard cryptographic salt and hashing for user security.
+- **Zod Payload Validation**: Strict TypeScript-first schema validation preventing malformed data from hitting the database.
+
+---
+
+### 1. High-Level Architecture Overview
+```mermaid
+flowchart TB
+    subgraph ClientLayer["Client & User Touchpoints"]
+        WebUI["Web App (React 18 / Vite)"]
+    end
+
+    subgraph BackendLayer["EventHub Core Engine (Express Backend)"]
+        APIRouter["API Gateway & Express Router"]
+        AuthEngine["Authentication & RBAC Engine"]
+        EventEngine["Event & Capacity Engine"]
+        TicketEngine["Ticketing & Registration Engine"]
+    end
+
+    subgraph DataLayer["Data & Communication Layer"]
+        SMTP["Nodemailer / Ethereal SMTP"]
+        DB[(PostgreSQL Database)]
+    end
+
+    WebUI -->|REST Requests| APIRouter
+
+    APIRouter --> AuthEngine
+    APIRouter --> EventEngine
+    APIRouter --> TicketEngine
+
+    AuthEngine <-->|Verify JWT & Hash| DB
+    EventEngine <-->|Raw SQL Queries| DB
+    TicketEngine <-->|Transaction & Capacity Check| DB
+
+    TicketEngine -->|Generate Ticket HTML| SMTP
+    SMTP -->|Dispatch Email| ClientLayer
+```
+
+---
+
+### 2. Ticketing & Registration Flow
+```mermaid
+flowchart LR
+    User["User Clicks Register"] --> AuthCheck{"Is Authenticated?"}
+    AuthCheck -->|No| Login["Redirect to Login"]
+    AuthCheck -->|Yes| CapacityCheck{"Check Event Capacity"}
+    
+    CapacityCheck -->|Sold Out| Error["Return 400: Event Full"]
+    CapacityCheck -->|Available| Transaction["Begin SQL Transaction"]
+    
+    Transaction --> Deduct["Decrement Available Seats"]
+    Deduct --> Insert["Insert Registration Record"]
+    Insert --> Commit["Commit Transaction"]
+    
+    Commit --> EmailTrigger["Trigger Email Service"]
+    EmailTrigger --> HTMLGen["Generate Ticket HTML"]
+    HTMLGen --> Send["Send via SMTP"]
+```
+
+---
 
 ### Frontend
-- **React (via Vite):** Chosen for lightning-fast Hot Module Replacement (HMR) and optimized production builds.
-- **TypeScript:** Enforces strict type safety across the entire application, preventing runtime errors and improving developer experience.
-- **React Router (v6):** Handles client-side routing, protected routes (guards), and dynamic URL parameters.
-- **Vanilla CSS (Custom Design System):** We deliberately avoided Tailwind/Bootstrap in favor of a custom CSS variable-driven architecture. This allows for hyper-specific styling (like the edge-to-edge "breakout" hero section and floating micro-animations) without utility-class bloat.
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite_5-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router_6-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+
+* **Framework**: React 18 powered by Vite for lightning-fast HMR.
+* **Styling**: Custom CSS Design System (Variables, Flexbox, CSS Grid).
+* **State Management**: React Context API & Custom Hooks.
+
+---
 
 ### Backend
-- **Node.js & Express:** A lightweight, unopinionated server framework that allows for rapid API development.
-- **TypeScript:** Shares types and interfaces with the frontend, ensuring full-stack data consistency.
-- **PostgreSQL (via `pg`):** A powerful, open-source object-relational database. We use raw SQL queries via a connection pool to maximize performance and maintain absolute control over data execution.
-- **Zod:** A TypeScript-first schema declaration and validation library. Used extensively in middleware to sanitize and validate incoming request payloads before they hit the database.
-- **JSON Web Tokens (JWT) & Bcrypt:** Industry-standard tools for stateless authentication and secure password hashing.
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white)
+
+* **Server**: Node.js & Express.
+* **Database**: PostgreSQL (using raw `pg` pool).
+* **Validation**: Zod schema validation middleware.
+* **Email**: Nodemailer with automated Ethereal fallback for local development.
 
 ---
-
-## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- PostgreSQL (v14 or higher)
+* **Node.js**: v18.0.0 or higher
+* **PostgreSQL**: v14 or higher
 
-### 1. Database Setup
+---
+
+### Manual Setup
+#### 1. Clone the Repository
+```bash
+git clone https://github.com/Ayush-Srivastava63/EventHub.git
+cd EventHub
+```
+
+#### 2. Database Initialization
 1. Create a PostgreSQL database named `event_management`.
-2. The necessary tables (`users`, `events`, `registrations`) will automatically initialize when you start the backend server via `init.ts`.
+2. The schema will be automatically generated when the backend starts.
 
-### 2. Backend Configuration
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the `backend` directory (use `.env.example` as a reference):
-   ```env
-   PORT=5000
-   DATABASE_URL=postgresql://your_db_user:your_db_password@localhost:5432/event_management
-   JWT_SECRET=your_super_secret_jwt_string
-   SMTP_HOST=smtp.ethereal.email
-   SMTP_PORT=587
-   SMTP_USER=your_ethereal_user
-   SMTP_PASS=your_ethereal_pass
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+#### 3. Setup Backend Server
+```bash
+cd backend
+npm install
+```
 
-### 3. Frontend Configuration
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the `frontend` directory:
-   ```env
-   VITE_API_URL=http://localhost:5000/api
-   ```
-4. Start the frontend development server:
-   ```bash
-   npm run dev
-   ```
+Create a `.env` file in the `backend` directory:
+```env
+PORT=5000
+DATABASE_URL=postgresql://user:password@localhost:5432/event_management
+JWT_SECRET=your_jwt_secret
+SMTP_HOST=smtp.ethereal.email
+SMTP_PORT=587
+SMTP_USER=test
+SMTP_PASS=test
+```
 
-The frontend will be available at `http://localhost:5173`.
+Start the backend server:
+```bash
+npm run dev
+```
+
+#### 4. Setup Frontend Web App
+```bash
+cd ../frontend
+npm install
+```
+
+Create a `.env` file in the `frontend` directory:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+Start the frontend development server:
+```bash
+npm run dev
+```
 
 ---
 
-## 🏗️ Architecture & Design Decisions
-
-### The "Full-Bleed" Layout Challenge
-One of the core design goals was to create an immersive, full-screen hero section while keeping the rest of the application constrained to a readable `1200px` max-width. 
-Instead of fighting global CSS wrappers, we implemented a dynamic routing structure in `App.tsx` that conditionally applies layout containers based on the current URL. The landing page escapes all constraints, while internal pages (like the Dashboard) are neatly boxed.
-
-### Stateless Authentication
-The application relies entirely on JWTs stored securely in `localStorage` (alongside a user context provider). This eliminates the need for server-side sessions, allowing the backend to scale horizontally without memory bottlenecks.
-
-### Raw SQL vs ORM
-We chose to use the raw `pg` driver instead of heavy ORMs like Prisma or TypeORM. This drastically reduces the dependency footprint, completely eliminates the "N+1 query" problem often hidden by ORMs, and allows for highly optimized, handcrafted SQL statements.
+## Project Structure
+```
+EventHub/
+├── backend/                   
+│   ├── src/
+│   │   ├── controllers/       # Route logic (Auth, Events, Registrations)
+│   │   ├── db/                # Connection pool & schema initialization
+│   │   ├── middleware/        # JWT Auth, Zod Validation, Error Handling
+│   │   ├── routes/            # Express route definitions
+│   │   ├── scripts/           # Admin seeding utilities
+│   │   └── services/          # Core business logic and SMTP mailing
+├── frontend/                  
+│   ├── public/                # Static assets (logo.png)
+│   └── src/
+│       ├── api/               # Axios client and API wrappers
+│       ├── components/        # Reusable UI (Navbar, EventCard, Modal)
+│       ├── context/           # AuthContext provider
+│       └── pages/             # App routing views (Home, Dashboard, Events)
+```
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Security & Privacy
+- **Stateless Verification**: JWTs are verified strictly in middleware, preventing unauthorized access to protected endpoints without querying the database per request.
+- **Password Cryptography**: Passwords are never stored in plaintext. Bcrypt with a 10-round salt ensures high resistance to brute-force and rainbow table attacks.
+- **SQL Injection Prevention**: All `pg` database interactions utilize parameterized queries (`$1`, `$2`), eliminating SQL injection vulnerabilities.
+
+---
+
+## License
+Distributed under the MIT License. See `LICENSE` for details.
