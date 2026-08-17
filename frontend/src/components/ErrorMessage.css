@@ -1,0 +1,40 @@
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-lg);
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.error-message__icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.error-message__text {
+  color: var(--color-danger);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.error-message__retry {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.2s;
+}
+
+.error-message__retry:hover {
+  background: var(--color-primary-dark);
+}

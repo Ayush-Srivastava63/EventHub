@@ -1,0 +1,113 @@
+.my-events {
+  padding: 2rem 0 4rem;
+}
+
+.my-events__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.my-events__subtitle {
+  color: var(--color-text-secondary);
+  margin: 0 0 2rem;
+}
+
+.my-events__section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.my-events__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.my-events__card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.my-events__card:hover {
+  border-color: var(--color-primary);
+}
+
+.my-events__card--cancelled {
+  opacity: 0.6;
+}
+
+.my-events__card-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.my-events__card-title:hover {
+  color: var(--color-primary);
+}
+
+.my-events__card-meta {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.my-events__card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.my-events__status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.my-events__status--confirmed {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--color-success);
+}
+
+.my-events__status--cancelled {
+  background: rgba(220, 53, 69, 0.1);
+  color: var(--color-danger);
+}
+
+.my-events__empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--color-text-secondary);
+}
+
+.my-events__empty p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 576px) {
+  .my-events__card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .my-events__card-meta {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}

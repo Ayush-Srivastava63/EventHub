@@ -1,0 +1,336 @@
+/* Base Dark Theme Overrides for Home */
+.home-dark {
+  background-color: #0d0d0d;
+  color: #ffffff;
+  min-height: 100vh;
+  margin: 0 calc(50% - 50vw);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  overflow-x: hidden;
+}
+
+/* Typography Gradients */
+.text-gradient {
+  background: linear-gradient(90deg, #f93a89, #f5832a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-2 {
+  background: linear-gradient(90deg, #bd00ff, #f93a89, #f5832a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Hero Section ─── */
+.luma-hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 4rem 1.5rem;
+}
+
+/* Floating Cards Background */
+.luma-floating-cards {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.luma-card {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.1);
+  background: #1a1a1a;
+  transition: transform 0.3s;
+}
+
+.luma-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.luma-card-inner {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: white; font-weight: 700;
+}
+
+.bg-blue { background: #0022ff; }
+.card-code { font-size: 2.5rem; font-family: monospace; font-weight: bold; margin-bottom: 0.5rem;}
+.bg-blue small { font-size: 0.75rem; letter-spacing: 0.5px;}
+
+/* Positions for Floating Cards (mimicking screenshot) */
+.card-1 { top: 30%; left: 8%; transform: rotate(-8deg); width: 130px; height: 130px; opacity: 0.8;}
+.card-2 { top: 35%; right: 5%; transform: rotate(5deg); width: 150px; height: 150px; opacity: 0.85;}
+.card-3 { top: 12%; left: 20%; transform: rotate(-5deg); width: 160px; height: 160px; }
+.card-4 { bottom: 20%; left: 12%; transform: rotate(5deg); width: 170px; height: 170px;}
+.card-5 { bottom: 15%; right: 15%; transform: rotate(-6deg); width: 180px; height: 180px;}
+.card-6 { top: 18%; right: 22%; transform: rotate(10deg); width: 140px; height: 140px; opacity: 0.9;}
+
+.luma-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 750px;
+  background: radial-gradient(circle at center, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.8) 40%, rgba(13,13,13,0) 80%);
+  padding: 4rem;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.luma-logo-accent {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #777;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.luma-hero__title {
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 0 0 1.5rem;
+}
+
+.luma-hero__subtitle {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: #888;
+  line-height: 1.6;
+  margin: 0 auto 3rem;
+  max-width: 500px;
+}
+
+.luma-hero__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn-luma-primary {
+  background: #ffffff;
+  color: #000000;
+  padding: 1rem 2.5rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 14px rgba(255,255,255,0.25);
+}
+
+.btn-luma-primary:hover {
+  background: #f0f0f0;
+  transform: scale(1.03);
+}
+
+.btn-luma-text {
+  color: #888;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+}
+
+.btn-luma-text:hover {
+  color: #ffffff;
+}
+
+.btn-luma-text span {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ─── CTA Section (Dot Background) ─── */
+.luma-cta {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+  background-color: #111;
+}
+
+/* Dot pattern using radial gradient */
+.luma-dots-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 1;
+  /* Fades out the dots heavily so they are only visible in some patches like the screenshot */
+  mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+  opacity: 0.8;
+}
+
+.luma-cta__content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+
+.luma-cta__title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0 0 3rem;
+  letter-spacing: -0.02em;
+}
+
+.luma-cta__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.btn-luma-outline {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.btn-luma-outline:hover {
+  border-color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.05);
+}
+
+.btn-luma-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-luma-secondary:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ─── Footer ─── */
+.luma-footer {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  background-color: #111;
+  width: 100%;
+}
+
+.luma-footer__container {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.luma-footer__top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5rem;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.luma-footer__social {
+  margin-left: auto;
+  display: flex;
+  gap: 1.5rem;
+  color: #a1a1aa;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.luma-footer__social span:hover {
+  color: #ffffff;
+}
+
+.luma-footer__brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.5px;
+}
+
+.luma-footer__links {
+  display: flex;
+  gap: 2rem;
+}
+
+.luma-footer__links a {
+  color: #a1a1aa;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.luma-footer__links a:hover {
+  color: #ffffff;
+}
+
+.luma-footer__bottom {
+  display: flex;
+  justify-content: flex-start;
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.luma-footer__legal {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.luma-footer__legal a {
+  color: #555;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.luma-footer__legal a:hover {
+  color: #888;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .luma-card { display: none; } /* Hide floating cards on mobile to prevent clipping and keep it clean */
+  .luma-hero__content { 
+    background: none; 
+    padding: 1rem;
+  }
+  .luma-cta__actions { 
+    flex-direction: column; 
+    padding: 0 2rem; 
+  }
+  .luma-footer__top { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 1.5rem;
+  }
+}
